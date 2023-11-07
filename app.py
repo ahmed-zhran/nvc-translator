@@ -32,7 +32,7 @@ def __default_message(message:str):
             {"role": "user", "content": new_prompt},
         ],
         # max_tokens=3000,
-        temperature=1.2
+        temperature=1.5
     )
     print(result)
     return {"translation": result["choices"][0]["message"]["content"]}

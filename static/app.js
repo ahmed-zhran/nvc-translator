@@ -22,6 +22,7 @@ function jsonEncoder(str) {
       let ans = JSON.parse(str);
       return ans;
   } catch (e) {
+    console.log("e: ", e)
       return JSON.parse(JSON.parse(JSON.stringify(str)));
   }
 }
@@ -38,18 +39,18 @@ function callback() {
       })
         .then(response => response.json())
         .then(json => {
-          let output_text;
+          let output_text = JSON.parse(json[0].translation);
           console.log("original res: ", json)
-          console.log("json0: ", (json[0].translation))
+          console.log("json0: ", output_text)
           //********************* removing new lines and spaces *******************************************/
-          output_text = json[0].translation.split('\n').filter(s => Boolean(s.trim()));
-          console.log("json1: ", output_text)
+          // output_text = json[0].translation.split('\n').filter(s => Boolean(s.trim()));
+          // console.log("json1: ", output_text)
           //********************* converting to array of objects (key: [values]) **************************/
-          output_text = output_text.map(e => ( { [`${e.split(':')[0]}`] : jsonEncoder(e.split(':')[1]) } ))
-          console.log("json2: ", output_text)
+          // output_text = output_text.map(e => ( { [`${e.split(':')[0]}`] : jsonEncoder(e.split(':')[1]) } ))
+          // console.log("json2: ", output_text)
           //********************* reducing array of objects to one object *********************************/
-          output_text = output_text.reduce((prev, nxt) => ({...prev, ...nxt}), {})
-          console.log("json3: ", output_text)
+          // output_text = output_text.reduce((prev, nxt) => ({...prev, ...nxt}), {})
+          // console.log("json3: ", output_text)
           /*
             output_text: {
               "original_txt": "",

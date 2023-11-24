@@ -15,8 +15,8 @@ def __default_message(message:str):
     # new_prompt = "Rephrase the following in NVC Language. Be careful to distinguish pseudofeelings from feelings. \n" + message
     # new_prompt = "I will give you a text rephrase in NVC Language. Be careful to distinguish pseudofeelings from feelings. Rephrase it and then list down those [Observations, Feelings, Needs,  Requests] after the rephrased text. here is the original text to rephrase: \""+ message + "\". I need the full response in json object including [original_txt, rephrased_txt, Observations, Feelings, Needs,  Requests]"
     # new_prompt = "I will give you a text rephrase in NVC Language. Be careful to distinguish pseudofeelings from feelings. Rephrase it and then list down those [Observations, Feelings, Needs,  Requests] after the rephrased text. here is the original text to rephrase: \""+ message + "\". I need each of those [original_txt, rephrased_txt, Observations, Feelings, Needs,  Requests] in a seperate line without gab lines or prefix or postfix response explanation or start ."
-    new_prompt = 'I will give you a text rephrase in NVC Language. Be careful to distinguish pseudofeelings from feelings. Rephrase it and then list down those [observations, feelings, needs,  requests] after the rephrased text. here is the original text to rephrase: "'+ message + '". I need each of those keys [original_txt, rephrased_txt, observations, feelings, needs,  requests] in a seperate line - in the format of (key:value) and for each of the these keys [Observations, Feelings, Needs,  Requests] the value must be a valid array format even for single values ex(["val 1", "val 2"], ["val 1"], []) - without gab lines or prefix or postfix response explanation (example valid response: ' "original_txt:\"somevalue\"\nrephrased_txt: \"somevalue.\"\n\nobservations: somevaluesArray\nfeelings: somevaluesArray\nneeds: somevaluesArray\nrequests: somevaluesArray"')'
-
+    # new_prompt = 'I will give you a text rephrase in NVC Language. Be careful to distinguish pseudofeelings from feelings. Rephrase it and then list down those [observations, feelings, needs,  requests] after the rephrased text. here is the original text to rephrase: "'+ message + '". I need each of those keys [original_txt, rephrased_txt, observations, feelings, needs,  requests] in the json object format and for each of the these keys [Observations, Feelings, Needs,  Requests] the value must be a valid array format even for single values ex(["val 1", "val 2"], ["val 1"], []) - without gab lines or prefix or postfix response explanation (example valid response: ' "original_txt:\"somevalue\"\nrephrased_txt: \"somevalue.\"\n\nobservations: somevaluesArray\nfeelings: somevaluesArray\nneeds: somevaluesArray\nrequests: somevaluesArray"')'
+    new_prompt = 'I will give you a text rephrase in NVC Language. Be careful to distinguish pseudofeelings from feelings. Rephrase it and then list down those [observations, feelings, needs,  requests] after the rephrased text. here is the original text to rephrase: "'+ message + '". I need each of those keys [original_txt, rephrased_txt, observations, feelings, needs,  requests] in the json object format and for each of the these keys [observations, feelings, needs,  requests] the value must be a valid array format even for single values ex(["val 1", "val 2"], ["val 1"], []) '
     ##########3###### old model
     # result = openai.Completion.create(
     #     model="text-davinci-003",
@@ -27,12 +27,13 @@ def __default_message(message:str):
     # return {"translation": result["choices"][0]["text"]}
     ################# new model
     result = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo-16k",
+        model="gpt-3.5-turbo-1106",
         messages=[
             {"role": "user", "content": new_prompt},
         ],
         # max_tokens=3000,
-        temperature=1.5
+        temperature=1.2,
+        response_format={ "type": "json_object" }
     )
     print(result)
     return {"translation": result["choices"][0]["message"]["content"]}

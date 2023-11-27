@@ -10,6 +10,9 @@ var loading = document.querySelector("#loading");
 // mock server
 // var url = "https://lessonfourapi.tanaypratap.repl.co/translate/yoda.json"
 
+function getText(text) {
+  return text?.split(',')?.join(', ') || '';
+}
 
 // actual server
 var url = "translate"
@@ -63,10 +66,10 @@ function callback() {
           */
           //********assigning values */
           output_translate.innerText = output_text.rephrased_txt; // For some reason the response comes back with leading \n's
-          output_observations.innerText = output_text.observations;
-          output_feelings.innerText = output_text.feelings;
-          output_needs.innerText = output_text.needs;
-          output_requests.innerText = output_text.requests;
+          output_observations.innerText = getText(output_text.observations);
+          output_feelings.innerText = getText(output_text.feelings);
+          output_needs.innerText = getText(output_text.needs);
+          output_requests.innerText = getText(output_text.requests);
           // Hide spinner
           loading.style.display = 'none';
           // Show translate button

@@ -49,13 +49,14 @@ textarea {
     border: 1px solid var(--primary-color);
     color: black;
     width: 90%;
-    text-align: center;
+    /* text-align: center; */
     margin-left: auto;
     margin-right: auto;
     font-family: 'Montserrat', sans-serif;
     border-top-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
     font-size: medium;
+    line-height: 1.5;
 
 }
 
@@ -72,7 +73,7 @@ textarea {
     margin: 1rem;
     padding: 1rem;
     /* font-family: monospace; */
-    text-align: center;
+    text-align: left;
     max-width: 90%;
     width: 90%;
     margin-left: auto;
@@ -80,17 +81,18 @@ textarea {
     border-top-right-radius: 1rem;
     border-bottom-left-radius: 1rem;
     font-size: medium;
+    line-height: 1.5;
 }
 
 #output-giraffe {
     border: 1px solid var(--primary-color);
-    display: flex;
-    justify-content: space-around;
+    display: grid;
+    /* justify-content: space-around; */
     min-height: 14vh;
     margin: 1rem;
-    padding: 1rem;
+    padding: 0.5rem 1rem;
     /* font-family: monospace; */
-    text-align: center;
+    text-align: left;
     max-width: 90%;
     width: 90%;
     margin-left: auto;
@@ -99,20 +101,31 @@ textarea {
     /* border-top-right-radius: 1rem; */
     /* border-bottom-left-radius: 1rem; */
     font-size: medium;
-    background: #eee;
+    background-color: rgba(29, 78, 216, 0.05);
 }
 
 .giraffe-container {
-    max-width: 25%;
+    gap: 10px;
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(29, 78, 216, 0.1);
+}
+
+.giraffe-container:last-child {
+    border-bottom: none;
 }
 
 .giraffe-label {
     color: #1D4ED8;
     font-weight: bold;
+    width: 120px;
+    border-right: 1px solid rgba(29, 78, 216, 0.1);
+    flex-shrink: 0;
 }
 
 .giraffe-value{
-    margin-top: 5px;
+    line-height: 1.5;
+    word-wrap: break-word;
 }
 
 /* container */
@@ -143,6 +156,7 @@ textarea {
 .navigation .nav-brand {
     font-weight: bolder;
     color: white;
+    line-height: 1.5;
 }
 
 .navigation .link {
@@ -151,7 +165,11 @@ textarea {
 }
 
 .navigation .nav-pills {
-    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .navigation .link-active {
@@ -167,6 +185,7 @@ textarea {
 .list-item-inline {
     display: inline;
     margin: 0rem .5rem;
+    cursor: pointer;
 }
 
 /* links */
@@ -185,9 +204,15 @@ textarea {
     /* display: block; */
     max-width: 140px;
     margin: 1rem 1rem 1rem 0rem;
-
+    cursor: pointer;
+    transition: 0.2s ease;
     border: 1px solid var(--primary-color);
     ;
+}
+
+.link-primary:hover {
+    background-color: var(--primary-color);
+    color: var(--off-white);
 }
 
 .link-secondary {
@@ -222,6 +247,11 @@ textarea {
 
 .footer ul {
     padding-inline-start: 0px;
+    line-height: 1.5;
+}
+
+.footer u {
+    line-height: 1.5;
 }
 
 /* hero */
@@ -290,3 +320,15 @@ textarea {
     100% { transform: rotate(360deg); }
 }
 
+a {
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+}
+
+@media screen and (max-width: 560px) {
+    .navigation .nav-pills {
+        gap: 0.5rem;
+        row-gap: 0.75rem;
+        margin-top: 18px;
+    }
+}

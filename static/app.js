@@ -11,7 +11,7 @@ var loading = document.querySelector("#loading");
 // var url = "https://lessonfourapi.tanaypratap.repl.co/translate/yoda.json"
 
 function getText(text) {
-  return text?.split(',')?.join(', ') || '';
+  return text?.join(', ') || '';
 }
 
 // actual server

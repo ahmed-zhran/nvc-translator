@@ -21,17 +21,14 @@
     <link rel="manifest" href="../static/site.webmanifest">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
-    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" />
-    <!-- <link rel="stylesheet" href="../static/style.css"> -->
     <script src="https://kit.fontawesome.com/1a48924413.js" crossorigin="anonymous"></script>
     <script>
-        // Theme
-        const currentTheme = localStorage.getItem("theme");
-        if (currentTheme == "dark") {
-            document.querySelectorAll('.theme-icon').forEach((icon) => icon.innerHTML = `<i class="fas fa-sun" id="zon"></i>`)
-            document.body.classList.add("dark-theme");
-        }
+        // On page load or when toggling the theme
+        var currentTheme = localStorage.getItem('theme') || (window.matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light");
+        document.documentElement.setAttribute('data-theme', currentTheme);
     </script>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" />
+    <!-- <link rel="stylesheet" href="../static/style.css"> -->
 </head>
 
 <body>
@@ -40,7 +37,8 @@
         <nav class="navigation">
             <div class="nav-brand">
                 <span class="brand-container">
-                    <img class="brand-img" src="../static/giraffe_small.png">
+                    <img src="{{ url_for('static', filename='giraffe_small.png') }}" alt="">
+                    <!-- <img class="brand-img" src="../static/giraffe_small.png"> -->
                     NVC
                 </span>
                 <div class="mobile-menu">
@@ -90,7 +88,8 @@
                     Now</a>
             </div>
             <div class="hero-right">
-                <img class="hero-img" src="{{ url_for('static', filename='giraffe_cropped.webp') }}" />
+                <img class="hero-img" data-aos="zoom-out"
+                    src="{{ url_for('static', filename='giraffe_cropped.webp') }}" />
                 <!-- <img data-aos="zoom-out" src="../static/giraffe_cropped.webp" alt="giraffe" class="hero-img"> -->
             </div>
         </section>

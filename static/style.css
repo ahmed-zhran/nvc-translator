@@ -343,6 +343,7 @@ body {
         flex-direction: column-reverse;
         justify-content: center;
         gap: 60px;
+        padding-top: 60px;
     }
 
     .hero-left {
@@ -372,8 +373,8 @@ body {
 @media (max-width:450px) {
     .hero {
         gap: 24px;
-        /* justify-content: start; */
-        padding-top: 60px;
+        justify-content: start;
+        padding-top: 120px;
     }
 
     .hero-left {

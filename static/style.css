@@ -365,8 +365,16 @@ body {
         gap: 32px;
     }
 
+    .hero-para {
+        line-height: 1.3;
+    }
+
+    .hero-second-para {
+        line-height: 1.3;
+    }
+
     .hero-img {
-        max-width: 280px;
+        max-width: 250px;
     }
 }
 
@@ -377,12 +385,16 @@ body {
         /* padding-top: 80px; */
     }
 
+    .hero-left {
+        text-align: left;
+    }
+
     .hero-heading {
         font-size: 2.5rem;
     }
 
     .hero-img {
-        max-width: 180px;
+        max-width: 160px;
     }
 }
 

@@ -87,14 +87,6 @@ function callback() {
 
 translate.addEventListener("click", callback)
 
-// Theme
-const currentTheme = localStorage.getItem("theme");
-if (currentTheme == "dark") {
-  // document.getElementById('toggleknop').innerHTML = '<i class="fas fa-sun" id="zon"></i>';
-  document.querySelectorAll('.theme-icon').forEach((icon) => icon.innerHTML = `<i class="fas fa-sun" id="zon"></i>`)
-  document.body.classList.add("dark-theme");
-}
-
 function changeTheme() {
   document.body.classList.toggle("dark-theme");
 

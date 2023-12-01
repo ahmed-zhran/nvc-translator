@@ -24,6 +24,14 @@
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" />
     <!-- <link rel="stylesheet" href="../static/style.css"> -->
     <script src="https://kit.fontawesome.com/1a48924413.js" crossorigin="anonymous"></script>
+    <script>
+        // Theme
+        const currentTheme = localStorage.getItem("theme");
+        if (currentTheme == "dark") {
+            document.querySelectorAll('.theme-icon').forEach((icon) => icon.innerHTML = `<i class="fas fa-sun" id="zon"></i>`)
+            document.body.classList.add("dark-theme");
+        }
+    </script>
 </head>
 
 <body>
@@ -44,14 +52,6 @@
                     </span>
                 </div>
             </div>
-            <!-- <span style="font-size: .8em;font-style: italic;">Translate any text to NVC, Marshall Rosenberg's
-
-                <a style="color: inherit;" target="_blank"
-                    href="https://www.youtube.com/watch?app=desktop&v=Xov5z_GJ9Zs">Nonviolent Communication</a>
-                (<a style="color: inherit;" target="_blank"
-                    href="https://www.amazon.com/Nonviolent-Communication-Language-Life-Changing-Relationships/dp/189200528X">more</a>)
-            </span> -->
-
             <div class="navbar-right">
                 <a class="link link-active" href="/">Home</a>
                 <a class="link" target="_blank" href="https://twitter.com/nvctranslator">Gallery</a>
@@ -85,12 +85,13 @@
                     <a href="https://www.amazon.com/Nonviolent-Communication-Language-Life-Changing-Relationships/dp/189200528X"
                         target="_blank">(more)</a>
                 </p>
-                <a data-aos="fade-up" data-aos-delay="300" data-aos-offset="50" href="#translate-section" class="hero-button">Translate
+                <a data-aos="fade-up" data-aos-delay="300" data-aos-offset="1" href="#translate-section"
+                    class="hero-button">Translate
                     Now</a>
             </div>
             <div class="hero-right">
-                <img class="hero-img" src="{{ url_for('static', filename='giraffe_cropped.png') }}" />
-                <!-- <img data-aos="zoom-out" src="../static/giraffe_cropped.png" alt="giraffe" class="hero-img"> -->
+                <img class="hero-img" src="{{ url_for('static', filename='giraffe_cropped.webp') }}" />
+                <!-- <img data-aos="zoom-out" src="../static/giraffe_cropped.webp" alt="giraffe" class="hero-img"> -->
             </div>
         </section>
         <!--------------------------- Translate Section --------------------------->
@@ -167,7 +168,7 @@
             duration: 800
         });
     </script>
-        <script src="{{ url_for('static', filename='app.js') }}"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
     <!-- <script src="../static/app.js"></script> -->
 </body>
 

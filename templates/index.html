@@ -13,6 +13,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <title>NVC Translator</title>
     <link rel="apple-touch-icon" sizes="180x180" href="../static/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../static/favicon-32x32.png">
@@ -26,11 +27,14 @@
 </head>
 
 <body>
-    <!-- nav -->
-    <div class="nav-wrapper">
+    <!------------------------------- nav ------------------------------->
+    <header class="nav-wrapper">
         <nav class="navigation">
             <div class="nav-brand">
-                NVC
+                <span class="brand-container">
+                    <img class="brand-img" src="../static/giraffe_small.png">
+                    NVC
+                </span>
                 <div class="mobile-menu">
                     <span class="theme-icon" id="toggleknop" onclick="changeTheme()">
                         <i class="fas fa-moon" id="zon"></i>
@@ -61,98 +65,109 @@
                 </span>
             </div>
         </nav>
-    </div>
+    </header>
 
-    <!-- translator -->
-    <div class="wrapper">
+    <main class="wrapper">
+        <!-------------------------- Hero Section -------------------------->
         <section class="hero">
             <div class="hero-left">
-                <h1 class="hero-heading">NVC <span class="heading-inverted"> Translator</span></h1>
-                <p class="hero-para">Nonviolent Communication (NVC) is a powerful approach. It guides us in expressing our needs and feelings clearly and
-                    compassionately, while also attentively acknowledging others. It's a pathway to deeper connections and harmony in relationships.
+                <h1 data-aos="fade-up" class="hero-heading">NVC <span class="heading-inverted"> Translator</span></h1>
+                <p data-aos="fade-up" data-aos-delay="100" class="hero-para">Nonviolent Communication (NVC) is a
+                    powerful approach. It guides us in expressing
+                    our needs and feelings clearly and
+                    compassionately, while also attentively acknowledging others. It's a pathway to deeper connections
+                    and harmony in relationships.
                 </p>
-                <p class="hero-second-para">
+                <p data-aos="fade-up" data-aos-delay="200" class="hero-second-para">
                     Translate any text to NVC, Marshall Rosenberg's
                     <a href="https://www.youtube.com/watch?app=desktop&v=Xov5z_GJ9Zs" target="_blank">
                         Nonviolent Communication </a>
                     <a href="https://www.amazon.com/Nonviolent-Communication-Language-Life-Changing-Relationships/dp/189200528X"
                         target="_blank">(more)</a>
                 </p>
-                <a href="#" class="hero-button">Translate Now</a>
+                <a data-aos="fade-up" data-aos-delay="300" data-aos-offset="50" href="#translate-section" class="hero-button">Translate
+                    Now</a>
             </div>
             <div class="hero-right">
                 <img class="hero-img" src="{{ url_for('static', filename='giraffe_cropped.png') }}" />
-                <!-- <img src="../static/giraffe_cropped.png" alt="giraffe" class="hero-img"> -->
-                <!-- <img class="hero-img" style="padding:0 0px 0 0px;width:230px"  src="{{ url_for('static', filename='giraffe_cropped.png') }}" /> -->
+                <!-- <img data-aos="zoom-out" src="../static/giraffe_cropped.png" alt="giraffe" class="hero-img"> -->
             </div>
         </section>
+        <!--------------------------- Translate Section --------------------------->
+        <section id="translate-section" class="translate-section">
+            <div class="translate-container">
 
-        <div class="container container-center">
-            <div class="justify">
                 <textarea id="input-translate"
                     placeholder="Enter text you want to translate, e.g. “You never text me and I feel abandoned.”"></textarea>
                 <!-- <textarea id="input-translate" placeholder="Enter a text you've received, or a text you're thinking to send, that you want to translate, e.g. “You never call me and I feel abandoned”"></textarea> -->
+
+                <!-- <button class="link link-primary" id="btn-translate">Translate</button> -->
+
+                <!-- <button class="link link-primary" id="btn-translate">Translate</button>
+                <div id="loading" class="spinner" style="display: none;"></div> -->
+
+                <div class="spinner-container">
+                    <button class="link link-primary" id="btn-translate" type="button">Translate</button>
+                    <div id="loading" class="spinner" style="display: none;"></div>
+                </div>
+
+                <div id="output-translate">Output of the translation</div>
+                <div id="output-giraffe">
+                    <div class="giraffe-container">
+                        <span class="giraffe-label">Observations:</span>
+                        <div class="giraffe-value" id="output-giraffe-observations"></div>
+                    </div>
+                    <div class="giraffe-container">
+                        <span class="giraffe-label">Feelings:</span>
+                        <div class="giraffe-value" id="output-giraffe-feelings"></div>
+                    </div>
+                    <div class="giraffe-container">
+                        <span class="giraffe-label">Needs:</span>
+                        <div class="giraffe-value" id="output-giraffe-needs"></div>
+                    </div>
+                    <div class="giraffe-container">
+                        <span class="giraffe-label">Requests:</span>
+                        <div class="giraffe-value" id="output-giraffe-requests"></div>
+                    </div>
+                </div>
             </div>
+        </section>
+    </main>
 
-            <!-- <button class="link link-primary" id="btn-translate">Translate</button> -->
-
-            <!-- <button class="link link-primary" id="btn-translate">Translate</button>
-        <div id="loading" class="spinner" style="display: none;"></div> -->
-
-            <div class="spinner-container">
-                <button class="link link-primary" id="btn-translate">Translate</button>
-                <div id="loading" class="spinner" style="display: none;"></div>
-            </div>
-
-            <div id="output-translate">Output of the translation</div>
-            <div id="output-giraffe">
-                <div class="giraffe-container">
-                    <span class="giraffe-label">Observations :</span>
-                    <div class="giraffe-value" id="output-giraffe-observations"></div>
-                </div>
-                <div class="giraffe-container">
-                    <span class="giraffe-label">Feelings :</span>
-                    <div class="giraffe-value" id="output-giraffe-feelings"></div>
-                </div>
-                <div class="giraffe-container">
-                    <span class="giraffe-label">Needs :</span>
-                    <div class="giraffe-value" id="output-giraffe-needs"></div>
-                </div>
-                <div class="giraffe-container">
-                    <span class="giraffe-label">Requests :</span>
-                    <div class="giraffe-value" id="output-giraffe-requests"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- footer -->
+    <!---------------------------- footer ---------------------------->
 
     <footer class="footer">
         <div class="footer-header">Connect with us on <a href="https://twitter.com/nvctranslator" class="link"
-                style="text-decoration:underline;" target="_blank">Twitter</a></div>
-        <ul class="social-links list-non-bullet">
-            <li class="list-item-inline">
-                <a class="link" target="_blank" href="https://twitter.com/jacobCole4000">
-                    Jacob Cole
-                </a>
-                <a class="link" target="_blank" href="https://twitter.com/oliviali_">
-                    • Olivia Li
-                </a>
-                <a class="link" target="_blank" href="https://twitter.com/tanzealous">
-                    • Tanzeela Khan
-                </a>
-                <a class="link" target="_blank" href="https://twitter.com/ethanchangzrl">
-                    • Ethan Chang
-                </a>
-            </li>
-        </ul>
+                style="text-decoration:underline;" target="_blank">Twitter</a>
+        </div>
+        <div class="social-links ">
+            <a class="link" target="_blank" href="https://twitter.com/jacobCole4000">
+                Jacob Cole
+            </a>
+            <a class="link" target="_blank" href="https://twitter.com/oliviali_">
+                • Olivia Li
+            </a>
+            <a class="link" target="_blank" href="https://twitter.com/tanzealous">
+                • Tanzeela Khan
+            </a>
+            <a class="link" target="_blank" href="https://twitter.com/ethanchangzrl">
+                • Ethan Chang
+            </a>
+        </div>
         <a class="link" target="_blank"
             href="https://docs.google.com/forms/d/e/1FAIpQLScF-8Na3dmzAXc4JkWGzi24lmNLDIaKfP1zlHh40wlflHg7wQ/viewform?usp=sf_link">
             <u>Interested in our iPhone keyboard and Chrome extension?</u>
         </a>
     </footer>
-    <script src="{{ url_for('static', filename='app.js') }}"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+            mirror: false,
+            duration: 800
+        });
+    </script>
+        <script src="{{ url_for('static', filename='app.js') }}"></script>
     <!-- <script src="../static/app.js"></script> -->
 </body>
 

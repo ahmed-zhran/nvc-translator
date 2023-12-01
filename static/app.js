@@ -87,19 +87,25 @@ function callback() {
 
 translate.addEventListener("click", callback)
 
-function changeTheme() {
-  document.body.classList.toggle("dark-theme");
 
-  // document.getElementById('toggleknop').innerHTML = '<i class="fas fa-moon" id="maan" ></i>';
+// Setting icon according to theme
+if (currentTheme === "dark") {
+  document.querySelectorAll('.theme-icon').forEach((icon) => icon.innerHTML = `<i class="fas fa-sun" id="zon"></i>`)
+} else {
   document.querySelectorAll('.theme-icon').forEach((icon) => icon.innerHTML = `<i class="fas fa-moon" id="maan"></i>`)
+}
+function changeTheme() {
+  const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  // Save the user's preference to local storage
+  localStorage.setItem('theme', theme);
 
-  let theme = "light";
-  if (document.body.classList.contains("dark-theme")) {
-    // document.getElementById('toggleknop').innerHTML = '<i class="fas fa-sun" id="zon"></i>';
+  // updating theme icon 
+  if (theme === "light") {
+    document.querySelectorAll('.theme-icon').forEach((icon) => icon.innerHTML = `<i class="fas fa-moon" id="maan"></i>`)
+  } else {
     document.querySelectorAll('.theme-icon').forEach((icon) => icon.innerHTML = `<i class="fas fa-sun" id="zon"></i>`)
-    theme = "dark";
   }
-  localStorage.setItem("theme", theme);
 }
 
 // Navbar

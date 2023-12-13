@@ -109,19 +109,16 @@ function changeTheme() {
 }
 
 // Navbar
-const navbarWrapper = document.querySelector('.nav-wrapper')
-const navbar = document.querySelector('.navigation')
-const menuIcon = document.getElementById('menu-icon')
-
 window.addEventListener('scroll', () => {
   if (window.scrollY > 80) {
-    navbarWrapper.classList.add('active')
+    document.querySelectorAll('.nav-wrapper').forEach((nav) => { nav.classList.add('active') })
   } else {
-    navbarWrapper.classList.remove('active')
+    document.querySelectorAll('.nav-wrapper').forEach((nav) => { nav.classList.remove('active') })
   }
 })
 
 function handleNavMenu() {
-  navbar.classList.toggle('active')
-  menuIcon.classList.toggle('active')
+  // console.log(navbars);
+  document.querySelectorAll('.navigation').forEach((navbar) => { navbar.classList.toggle('active') })
+  document.querySelectorAll('.menu-icon').forEach((icon) => { icon.classList.toggle('active') })
 }

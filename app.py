@@ -43,6 +43,10 @@ def __default_message(message:str):
 def home():
    return render_template("index.html")
 
+@app.route('/privacy-policy')
+def privacy_policy():
+   return render_template("privacy-policy.html")
+
 @app.route("/translate", methods=["GET"])
 def get():
     # get = session.get(SESSION_KEY)

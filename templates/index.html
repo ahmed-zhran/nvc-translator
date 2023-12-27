@@ -63,12 +63,17 @@
             </div>
             <div class="navbar-right">
                 <a class="link link-active" href="/">Home</a>
-                <a class="link" target="_blank" href="https://twitter.com/nvctranslator">Gallery</a>
                 <a class="link" target="_blank" href="https://github.com/ethanlolomg/nvc-api">GitHub</a>
                 <a class="link" target="_blank"
                     href="https://docs.google.com/forms/d/e/1FAIpQLScF-8Na3dmzAXc4JkWGzi24lmNLDIaKfP1zlHh40wlflHg7wQ/viewform">
                     iOS Keyboard*
                 </a>
+                <a class="link" target="_blank"
+                    href="https://chromewebstore.google.com/detail/rose-colored-glasses/lbnlobglbidochpfebaalpainepcjdci">
+                    Chrome Extension
+                </a>
+                <a class="link twitter" target="_blank" href="https://twitter.com/nvctranslator"><i
+                        class="fab fa-brands fa-twitter"></i></a>
                 <span class="theme-icon" id="toggleknop" onclick="changeTheme()">
                     <i class="fas fa-moon" id="zon"></i>
                 </span>
@@ -94,13 +99,13 @@
                     <a href="https://www.amazon.com/Nonviolent-Communication-Language-Life-Changing-Relationships/dp/189200528X"
                         target="_blank">(more)</a>
                 </p>
-                <a data-aos="fade-up" data-aos-delay="300" data-aos-offset="1" href="#translate-section"
+                <button onclick="handleTranslateButton()" type="button" data-aos="fade-up" data-aos-delay="300" data-aos-offset="1"
                     class="hero-button">Translate
-                    Now</a>
+                    Now</button>
             </div>
             <div class="hero-right">
-                <img class="hero-img" data-aos="zoom-out"
-                    src="{{ url_for('static', filename='giraffe_cropped.webp') }}" alt="hero-image" />
+                <img class="hero-img" data-aos="zoom-out" src="{{ url_for('static', filename='giraffe_cropped.webp') }}"
+                    alt="hero-image" />
                 <!-- <img data-aos="zoom-out" src="../static/giraffe_cropped.webp" alt="giraffe" class="hero-img"> -->
             </div>
         </section>

@@ -122,3 +122,20 @@ function handleNavMenu() {
   document.querySelectorAll('.navigation').forEach((navbar) => { navbar.classList.toggle('active') })
   document.querySelectorAll('.menu-icon').forEach((icon) => { icon.classList.toggle('active') })
 }
+
+// Scroll to translate section
+function scrollToTranslator() {
+  document.getElementById('translate-section').scrollIntoView({ behavior: 'smooth' });
+}
+
+function handleTranslateButton() {
+  scrollToTranslator();
+  localStorage.setItem('scrolled', 'true');
+}
+
+// Check localStorage on page load
+window.onload = function () {
+  if (localStorage.getItem('scrolled') === 'true') {
+    scrollToTranslator();
+  }
+}

@@ -29,10 +29,6 @@
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     font-family: 'Montserrat', sans-serif;
     position: relative;
@@ -107,8 +103,9 @@ body {
 
 .navbar-right {
     display: flex;
-    gap: 16px;
+    gap: 20px;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .navbar-right a {
@@ -126,6 +123,13 @@ body {
 .navigation .link-active {
     font-weight: 600;
     color: var(--primary-color-dark);
+}
+
+.twitter{
+    font-size: 1.3rem;
+}
+.twitter:hover{
+    color: #1DA1F2 !important;
 }
 
 .theme-icon {
@@ -193,6 +197,10 @@ body {
         gap: 16px;
     }
 
+    /* .navbar-right a {
+        padding: 0 16px;
+    } */
+
     .navbar-right .theme-icon {
         display: none;
     }
@@ -226,10 +234,14 @@ body {
     }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 525px) {
 
-    .navbar-right a {
-        padding: 0;
+    .navigation.active{
+        height: 170px;
+    }
+    .navbar-right{
+        gap: 16px;
+        justify-content: center;
     }
 }
 
@@ -301,6 +313,7 @@ body {
     margin-top: 8px;
     border: 1px solid var(--primary-color);
     transition: all 150ms linear;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .hero-button:hover {

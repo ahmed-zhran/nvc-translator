@@ -15,10 +15,14 @@ function getText(text) {
 }
 
 // actual server
-var url = "translate"
+var mobileUrl = "https://www.nvctranslator.com/translate"
+var webUrl = "translate"
 
-function urlfunc(url) {
-  return url + "?" + "text=" + input_translate.value
+function urlfunc() {
+  console.log("src: ", config.src)
+  if(config.src === "mobile")
+    return mobileUrl + "?" + "text=" + input_translate.value
+  return webUrl + "?" + "text=" + input_translate.value
 }
 function jsonEncoder(str) {
   try {
@@ -36,12 +40,20 @@ function callback() {
   // Hide translate button
   translate.style.display = 'none';
 
-  fetch(urlfunc(url), {
+  fetch(urlfunc(), {
     method: 'GET',
     mode: 'cors',
   })
     .then(response => response.json())
     .then(json => {
+      if(!json[0]) {
+        alert("please enter some text")
+        // Hide spinner
+        loading.style.display = 'none';
+        // Show translate button
+        translate.style.display = 'block';
+        return;
+      }
       let output_text = JSON.parse(json[0].translation);
       console.log("original res: ", json)
       console.log("json0: ", output_text)

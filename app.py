@@ -1,14 +1,76 @@
 from flask import Flask, session, request, jsonify, render_template
 import openai
 import os
-
+from flask_frozen import Freezer
+##################### global settings
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-app = Flask(__name__)
-app.config.update(ENV='development')
-app.config.update(SECRET_KEY='878as7d8f7997dfaewrwv8asdf8)(dS&A&*d78(*&ASD08A')
-
 SESSION_KEY = "json"
+
+#######################freeze app
+# Initialize Flask app
+app = Flask(__name__)
+app.config.update(
+    ENV='development',
+    SECRET_KEY='878as7d8f7997dfaewrwv8asdf8)(dS&A&*d78(*&ASD08A',
+    FREEZER_DESTINATION = './build',
+    FREEZER_BASE_URL = 'https://nvctranslator.com',  # set to your domain in production
+    FREEZER_REMOVE_EXTRA_FILES = False,  # careful with this in production
+)
+
+# Initialize Freezer before defining routes
+freezer = Freezer(app)
+
+@app.route('/')
+def home():
+   return render_template("index.html", src="mobile")
+
+@app.route('/privacy-policy.html')
+def privacy_policy():
+   return render_template("privacy-policy.html", src="mobile")
+
+# This is the part where we initialize the freezing process
+if __name__ == '__main__':
+    # Uncomment to run your application normally with Flask
+    # app.run(debug=True) 
+
+    # If you want to freeze your application and generate static files, uncomment below
+    freezer.freeze()
+
+########################################### flask app
+# Initialize Flask app
+app = Flask(__name__)
+app.config.update(
+    ENV='development',
+    SECRET_KEY='878as7d8f7997dfaewrwv8asdf8)(dS&A&*d78(*&ASD08A',
+)
+
+@app.route('/')
+def home():
+   return render_template("index.html", src="web")
+
+@app.route('/privacy-policy')
+def privacy_policy():
+   return render_template("privacy-policy.html", src="web")
+
+@app.route("/translate", methods=["GET"])
+def get():
+    # get = session.get(SESSION_KEY)
+    text = request.args.get("text")
+    response = jsonify(__default_message(text), 200)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+@app.route("/post", methods=["POST"])
+def post():
+    post = request.get_json()
+    print(post)
+    
+    if post is not None:
+        session[SESSION_KEY] = post
+        return jsonify(__default_message(post["text"]), 201)
+    else:
+        return jsonify(__default_message(message="wrong payload"), 400)
 
 def __default_message(message:str):
     # new_prompt = "Rephrase in NVC language " + message
@@ -39,33 +101,6 @@ def __default_message(message:str):
     return {"translation": result["choices"][0]["message"]["content"]}
 
 
-@app.route('/')
-def home():
-   return render_template("index.html")
-
-@app.route('/privacy-policy')
-def privacy_policy():
-   return render_template("privacy-policy.html")
-
-@app.route("/translate", methods=["GET"])
-def get():
-    # get = session.get(SESSION_KEY)
-    text = request.args.get("text")
-    response = jsonify(__default_message(text), 200)
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response # For some reason the response comes back with leading \n's; trimming in js for now
-
-
-@app.route("/post", methods=["POST"])
-def post():
-    post = request.get_json()
-    print(post)
-    
-    if post is not None:
-        session[SESSION_KEY] = post
-        return jsonify(__default_message(post["text"]), 201)
-    else:
-        return jsonify(__default_message(message="wrong payload"), 400)
-
-
 # app.run(host="127.0.0.1", port=5001, debug=True) # uncomment to run locally #runningLocally #ref
+
+

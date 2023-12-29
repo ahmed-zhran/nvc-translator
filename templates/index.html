@@ -15,10 +15,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <title>NVC Translator</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="../static/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../static/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../static/favicon-16x16.png">
-    <link rel="manifest" href="../static/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{url_for('static', filename='apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename='favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename='favicon-16x16.png') }}">
+    <link rel="manifest" href="{{url_for('static', filename='site.webmanifest') }}">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     <script src="https://kit.fontawesome.com/1a48924413.js" crossorigin="anonymous"></script>
@@ -40,6 +40,13 @@
     <meta name="twitter:title" content="NVC Translator">
     <meta name="twitter:description" content="Translate any text to NVC">
     <meta name="twitter:image" content="{{ url_for('static', filename='nvc.gif') }}">
+    <script>
+        // Pass Python variables to JavaScript
+        var config = {
+            src: "{{ src }}"
+        }
+        // Now you can use secretKey and baseUrl in your JavaScript code
+    </script>
 </head>
 
 <body>
@@ -184,6 +191,7 @@
         });
     </script>
     <script src="{{ url_for('static', filename='app.js') }}"></script>
+    
     <!-- <script src="../static/app.js"></script> -->
 </body>
 

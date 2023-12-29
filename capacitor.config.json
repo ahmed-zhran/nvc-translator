@@ -1,0 +1,8 @@
+{
+  "appId": "nvctranslator.com",
+  "appName": "NVC-Translator",
+  "webDir": "build",
+  "server": {
+    "androidScheme": "https"
+  }
+}

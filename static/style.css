@@ -125,10 +125,11 @@ body {
     color: var(--primary-color-dark);
 }
 
-.twitter{
+.twitter {
     font-size: 1.3rem;
 }
-.twitter:hover{
+
+.twitter:hover {
     color: #1DA1F2 !important;
 }
 
@@ -236,10 +237,11 @@ body {
 
 @media (max-width: 525px) {
 
-    .navigation.active{
+    .navigation.active {
         height: 170px;
     }
-    .navbar-right{
+
+    .navbar-right {
         gap: 16px;
         justify-content: center;
     }
@@ -314,6 +316,7 @@ body {
     border: 1px solid var(--primary-color);
     transition: all 150ms linear;
     font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
 }
 
 .hero-button:hover {
@@ -575,6 +578,29 @@ textarea:focus {
 
     .spinner-container {
         margin: 24px 0;
+    }
+}
+
+/*-------------------------------------- Video guide section --------------------------------------*/
+.video-guide-section {
+    padding: 100px 40px;
+    overflow: hidden;
+}
+
+.video-guide-section .video-container {
+    max-width: 768px;
+    width: 100%;
+    margin: 0 auto;
+}
+.video-guide-section .loom-video{
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 6px 16px rgb(0 0 0 / 0.1);
+}
+
+@media (max-width: 768px) {
+    .video-guide-section {
+        padding: 100px 10px;
     }
 }
 

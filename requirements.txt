@@ -3,3 +3,6 @@ Werkzeug==2.2.2
 gunicorn==20.0.4
 openai==0.28.1
 Frozen-Flask==1.0.1
+slack==0.0.2
+slackeventsapi==3.0.1
+slackclient==2.9.4

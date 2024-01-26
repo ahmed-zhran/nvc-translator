@@ -2,6 +2,8 @@ from flask import Flask, session, request, jsonify, render_template
 import openai
 import os
 from flask_frozen import Freezer
+from slackeventsapi import SlackEventAdapter
+from slack import WebClient
 ##################### global settings
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -12,7 +14,7 @@ SESSION_KEY = "json"
 app = Flask(__name__)
 app.config.update(
     ENV='development',
-    SECRET_KEY='878as7d8f7997dfaewrwv8asdf8)(dS&A&*d78(*&ASD08A',
+    SECRET_KEY=os.getenv("SECRET_KEY"),
     FREEZER_DESTINATION = './build',
     FREEZER_BASE_URL = 'https://nvctranslator.com',  # set to your domain in production
     FREEZER_REMOVE_EXTRA_FILES = False,  # careful with this in production
@@ -42,7 +44,7 @@ if __name__ == '__main__':
 app = Flask(__name__)
 app.config.update(
     ENV='development',
-    SECRET_KEY='878as7d8f7997dfaewrwv8asdf8)(dS&A&*d78(*&ASD08A',
+    SECRET_KEY=os.getenv("SECRET_KEY"),
 )
 
 @app.route('/')
@@ -71,6 +73,87 @@ def post():
         return jsonify(__default_message(post["text"]), 201)
     else:
         return jsonify(__default_message(message="wrong payload"), 400)
+    
+########## slack integeration
+# Initialize the Slack event adapter
+signing_secret = os.getenv("SLACK_SIGNING_SECRET")
+slack_token = os.getenv("SLACK_TOKEN")
+slack_event_adapter = SlackEventAdapter(signing_secret, endpoint="/slack/events", server=app)
+slack_client = WebClient(token=slack_token)
+
+# Define routes for Slack events
+# Example responder to bot mentions
+############ old model
+# @slack_event_adapter.on("app_mention")
+# def handle_mentions(event_data):
+#     print(event_data)
+#     event = event_data["event"]
+#     text = event["text"]
+#     translation = "translation: " + text
+#     slack_client.chat_postMessage(
+#         channel=event["channel"],
+#         text=f">{translation}",
+#     )
+############ new model
+@slack_event_adapter.on("app_mention")
+def handle_mentions(event_data):
+    print(event_data)
+    event = event_data["event"]
+    channel_id = event["channel"]
+    user_id = event["user"]
+    message_text = event["text"]
+
+    # Check if the bot user ID is mentioned in the message
+    bot_user_id = os.getenv("SLACK_BOT_ID")  # Replace with your bot user ID
+    message_text = message_text.replace(f"<@{bot_user_id}>", "")
+
+    # Create a private channel with the user (if it doesn't exist)
+    response = slack_client.conversations_open(users=[user_id])
+
+    if response["ok"]:
+        private_channel_id = response["channel"]["id"]
+        translated_text = __slack_message(message_text)
+        
+        # Send the response to the private channel
+        slack_client.chat_postMessage(
+            channel=private_channel_id,
+            text=f"You said privately:\n>{message_text}\n\nI translated it to:\n>{translated_text}",
+        )
+    return
+
+
+# Example responder to greetings
+# @slack_event_adapter.on("message")
+# def handle_message(event_data):
+#     print(event_data)
+#     message = event_data["event"]
+#     # If the incoming message contains "hi", then respond with a "Hello" message
+#     # if message.get("subtype") is None and "hi" in message.get('text'):
+#     channel = message["channel"]
+#     message = "Hello <@%s>! :tada:" % message["user"]
+#     slack_client.chat_postMessage(channel=channel, text=message)
+
+########## functions
+            
+def __slack_message(message:str):
+    ################# new model
+    result = openai.ChatCompletion.create(
+        model="gpt-4-turbo-preview",
+        messages= [
+            {
+                "role": "system",
+                "content": "Rephrase the following in NVC Language. Be careful to distinguish pseudofeelings from feelings. and Ignore the text that matches the following regex in translation '<@[^>]+>' which is slack mentions and emped them back to the response as it is."
+            },
+            {
+                "role": "user",
+                "content": message
+            }
+        ],
+        # max_tokens=3000,
+        temperature=1.2
+    )
+    print(result)
+    return result["choices"][0]["message"]["content"]
 
 def __default_message(message:str):
     # new_prompt = "Rephrase in NVC language " + message
@@ -89,7 +172,7 @@ def __default_message(message:str):
     # return {"translation": result["choices"][0]["text"]}
     ################# new model
     result = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo-1106",
+        model="gpt-4-turbo-preview",
         messages=[
             {"role": "user", "content": new_prompt},
         ],
@@ -101,6 +184,6 @@ def __default_message(message:str):
     return {"translation": result["choices"][0]["message"]["content"]}
 
 
-# app.run(host="127.0.0.1", port=5001, debug=True) # uncomment to run locally #runningLocally #ref
+# app.run(host="127.0.0.1", port=5000, debug=True) # uncomment to run locally #runningLocally #ref
 
 

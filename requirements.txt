@@ -7,5 +7,4 @@ slack==0.0.2
 slackeventsapi==3.0.1
 slackclient==2.9.4
 pyee==8.1.0
-werkzeug==2.0.3
 
